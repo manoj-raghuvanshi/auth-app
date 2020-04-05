@@ -2,19 +2,31 @@ import jwt from 'jsonwebtoken';
 import AuthController from './authController';
 
 const defaultConfig = {
-    authUrl: 'https://tesseract.medlife.com',
+    baseUrl: '',
     grant_type: 'password',
-    client_secret: '1730590677b2d99a706dc2dc3cde399e76089ee5422168da',
-    client_id: '6987025429870713',
+    client_secret: '',
+    client_id: '',
     appName: 'app-user',
 };
 
 export default class AuthHandler {
     constructor(app, options) {
-        if (!app) {
-            throw new Error('an express app is required');
+        if (!(app && options)) {
+            throw new Error('app and config required');
         }
+        global.authConfig = defaultConfig;
         if (options && typeof options === 'object') {
+            const requiredKeys = [];
+            Object.keys(defaultConfig).forEach((key) => {
+                if (!options[key]) {
+                    requiredKeys.push(key);
+                }
+            });
+            if (requiredKeys.length) {
+                throw new Error(
+                    `pass the required keys:  ${requiredKeys.join(', ')}`
+                );
+            }
             global.authConfig = { ...defaultConfig, ...options };
         }
         app.use('/auth', AuthController());
@@ -23,11 +35,8 @@ export default class AuthHandler {
     // eslint-disable-next-line class-methods-use-this
     checkAuth(req, res, next) {
         let token = req.headers['x-access-token'] || req.headers.authorization;
-        if (token.startsWith('Bearer ')) {
+        if (token && token.startsWith('Bearer ')) {
             token = token.slice(7, token.length);
-        }
-
-        if (token) {
             jwt.verify(
                 token,
                 global.authConfig.client_secret,
@@ -39,10 +48,11 @@ export default class AuthHandler {
                     next();
                 }
             );
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: 'Auth token is not supplied',
+            });
         }
-        return res.status(400).json({
-            success: false,
-            message: 'Auth token is not supplied',
-        });
     }
 }

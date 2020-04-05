@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import jwt from 'jsonwebtoken';
 
 import { getUserProfile, getToken } from './authService';
 
@@ -16,7 +17,14 @@ function AuthController() {
         try {
             const response = await getToken(payload);
             const profile = await getUserProfile(response.data.access_token);
-            const userObj = { ...response.data, user: profile.data };
+            const userObj = {
+                ...response.data,
+                access_token: jwt.sign(
+                    { ...response.data },
+                    global.authConfig.client_secret
+                ),
+                user: profile.data,
+            };
             console.log(userObj);
 
             // const expireTs = Date.now() + userObj.expires_in * 1000;
