@@ -17,7 +17,7 @@ export default class AuthHandler {
         if (options && typeof options === 'object') {
             global.authConfig = { ...defaultConfig, ...options };
         }
-        app.use('auth', AuthController());
+        app.use('/auth', AuthController());
     }
 
     // eslint-disable-next-line class-methods-use-this

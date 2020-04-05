@@ -4,3 +4,4 @@ src
 .eslintrc.json
 .eslintignore
 .gitignore
+.vscode/settings.json
