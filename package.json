@@ -1,0 +1,37 @@
+{
+    "name": "auth-app",
+    "version": "1.0.0",
+    "description": "auth app for nodejs",
+    "main": "lib/index.js",
+    "scripts": {
+        "build": "babel src -d lib ",
+        "lint": "eslint src --fix",
+        "format": "prettier-eslint  \"src/*.js\"  --write"
+    },
+    "author": "manoj singh",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.19.2",
+        "express-session": "^1.17.0",
+        "jsonwebtoken": "^8.5.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.9.0",
+        "@babel/preset-env": "^7.9.0",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb": "^18.1.0",
+        "eslint-config-airbnb-base": "^14.1.0",
+        "eslint-config-prettier": "^6.10.1",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-promise": "^4.2.1",
+        "prettier": "^2.0.2",
+        "prettier-eslint-cli": "^5.0.0"
+    },
+    "peerDependencies": {
+        "axios": "^0.19.2",
+        "express": "^4.17.1"
+    }
+}
