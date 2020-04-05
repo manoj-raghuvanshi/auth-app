@@ -1,6 +1,6 @@
 {
     "name": "auth-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "auth app for nodejs",
     "main": "lib/index.js",
     "scripts": {
