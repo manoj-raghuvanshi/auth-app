@@ -27,12 +27,12 @@ function AuthController() {
             };
             console.log(userObj);
 
-            const expireTs = Date.now() + userObj.expires_in * 1000;
-            res.cookie('session', JSON.stringify(response.data), {
-                expires: expireTs,
-                secure: false,
-                httpOnly: true,
-            });
+            // const expireTs = Date.now() + userObj.expires_in * 1000;
+            // res.cookie('session', JSON.stringify(response.data), {
+            //     expires: expireTs,
+            //     secure: false,
+            //     httpOnly: true,
+            // });
             userObj.createdTs = Date.now();
             console.log('===start===');
             console.log(userObj);
